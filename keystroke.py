@@ -3,8 +3,28 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
+from sklearn import svm
 
 
+def learn_svm(data, train, test, target):
+  columns = data.columns[1:14]
+  X_train = train[columns]
+  y_train = train[target]  
+
+  X_test = test[columns]
+  y_test = test[target]
+
+  svmm = svm.SVC(kernel="linear")
+  svmm.fit(X_train,y_train)
+
+  res = svmm.predict(X_test)
+
+  acuracia = metrics.accuracy_score(y_test,res)
+  f1 = metrics.f1_score(y_test,res, average='weighted')
+  print("SVM")
+  print("Target: " + target)
+  print("Acurácia: " + str(acuracia))
+  print("F1 score: " + str(f1))
 
 def learn_random_forest(data ,train, test, target):
   columns = data.columns[1:14]
@@ -22,8 +42,10 @@ def learn_random_forest(data ,train, test, target):
 
   acuracia = metrics.accuracy_score(y_test,res)
   f1 = metrics.f1_score(y_test,res, average='weighted')
-  print(acuracia)
-  print(f1)
+  print("Random forest")
+  print("Target: " + target)
+  print("Acurácia: " + str(acuracia))
+  print("F1 score: " + str(f1))
 
 def learn_knn(data ,train, test, target):
   columns = data.columns[1:14]
@@ -42,20 +64,23 @@ def learn_knn(data ,train, test, target):
   acuracia = metrics.accuracy_score(y_test,res)
   f1 = metrics.f1_score(y_test,res, average='weighted')
   # classificacao = metrics.classification_report(y_test,res)
-  print(acuracia)
-  print(f1)
+  print("KNN")
+  print("Target: " + target)
+  print("Acurácia: " + str(acuracia))
+  print("F1 score: " + str(f1))
 
   # cm = metrics.confusion_matrix(y_test,res)
   # print(cm)
 
 def main():
-  data = pd.read_csv("data.csv")
+  data = pd.read_csv("datatarget.csv")
   train, test = train_test_split(data, shuffle = True, test_size=0.333)
-  target = "Target_Lilia"
   learn_knn(data, train, test, "Target_Lilia")
   learn_knn(data, train, test, "Target_Wesley")
   learn_random_forest(data, train, test, "Target_Lilia")
   learn_random_forest(data, train, test, "Target_Wesley")
+  learn_svm(data, train, test, "Target_Lilia")
+  learn_svm(data, train, test, "Target_Wesley")
 
 if __name__ =="__main__":
   main()
