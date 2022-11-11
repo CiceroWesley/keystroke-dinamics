@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, KFold, cross_val_score, cross_validate, StratifiedKFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 from sklearn import svm
@@ -72,52 +72,52 @@ def learn_knn(data ,train, test, target):
   # cm = metrics.confusion_matrix(y_test,res)
   # print(cm)
 
+def holdOut(data,targets):
+  train, test = train_test_split(data, shuffle = True, test_size=0.2)
+  for target in targets:
+    learn_knn(data, train, test, target)
+    learn_random_forest(data, train, test, target)
+    learn_svm(data, train, test, target)  
+
+def crossValidation(data, targets):
+  columns = data.columns[1:14]
+  X = data[columns]
+  folds = StratifiedKFold(10)
+  classifiers = [KNeighborsClassifier(n_neighbors=7, metric='euclidean'), svm.SVC(kernel="linear"), RandomForestClassifier(n_estimators=100, random_state = 42)]
+
+  acurracies = []
+  for i in range(len(targets)):
+    acurracies.append([])
+    # acurracys[i].append(targets[i])
+
+  for i in range(len(targets)):
+    y = data[targets[i]]
+    for j in range(len(classifiers)):
+      acurracy = []
+      for train_index, test_index in folds.split(X, y):
+            #print(train_index)
+            #print(test_index)
+            classifiers[j].fit(X.iloc[train_index],y.iloc[train_index])
+            predicted = classifiers[j].predict(X.iloc[test_index])
+            #print(sklearn.metrics.confusion_matrix(classes[test_index],predicted))
+            acur = metrics.accuracy_score(y.iloc[test_index],predicted) 
+            acurracy.append(acur)
+            # print(acur)
+      acurracies[i].append(acurracy)
+
+  # print(len(acurracies[0]))
+  # print(acurracies[0])
+  for i in range(len(acurracies)):
+    print("Classe:" + targets[i])
+    for j in range(len(acurracies[i])):
+      print(classifiers[j])
+      print("Média acurácia: {}".format(sum(acurracies[i][j])/len(acurracies[i][j])))
+
 def main():
-  data = pd.read_csv("datatarget.csv")
-  train, test = train_test_split(data, shuffle = True, test_size=0.333)
-  learn_knn(data, train, test, "Target_Lilia")
-  learn_knn(data, train, test, "Target_Wesley")
-  learn_random_forest(data, train, test, "Target_Lilia")
-  learn_random_forest(data, train, test, "Target_Wesley")
-  learn_svm(data, train, test, "Target_Lilia")
-  learn_svm(data, train, test, "Target_Wesley")
+  data = pd.read_csv("dataTarget.csv")
+  targets = ["Target_Lilia", "Target_Wesley"]
+  # holdOut(data,targets)
+  crossValidation(data, targets)
 
 if __name__ =="__main__":
   main()
-
-# # print(columns)
-# #Lilia
-# X_train = train[columns]
-# y_train = train["Target_Lilia"]
-
-# #Wesley
-# y_train_2 = train["Target_Wesley"]
-# y_test_2 = test["Target_Wesley"]
-
-# # print(y_train_2)
-# # print(y_test_2)
-# # print(X_train)
-# # print(y_train)
-# X_test = test[columns]
-# y_test = test["Target_Lilia"]
-# # print(X_test)
-# # print(y_test)
-# n_neighbors = 5
-
-# knn = KNeighborsClassifier(n_neighbors=n_neighbors, metric = 'euclidean')
-# knn.fit(X_train, y_train)
-
-# res = knn.predict(X_test)
-# # print(res)
-
-# acuracia = metrics.accuracy_score(y_test,res)
-# classificacao = metrics.classification_report(y_test,res)
-# # print(acuracia)
-# print(classificacao)
-
-# knn.fit(X_train, y_train_2)
-# res2 =knn.predict(X_test)
-# print(res2)
-# acuracia = metrics.accuracy_score(y_test_2,res2)
-# print(acuracia)
-
