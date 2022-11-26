@@ -111,7 +111,13 @@ def crossValidation(data, targets):
     print("Classe:" + targets[i])
     for j in range(len(acurracies[i])):
       print(classifiers[j])
-      print("Média acurácia: {}".format(sum(acurracies[i][j])/len(acurracies[i][j])))
+      mean = 0
+      for k in range(len(acurracies[i][j])):
+        print(str(k + 1) + ": " + str(acurracies[i][j][k]))
+        mean += acurracies[i][j][k]
+      # print("Média acurácia: {}".format(sum(acurracies[i][j])/len(acurracies[i][j])))
+      mean = mean / len(acurracies[i][j])
+      print("Média acurácia: " + str(mean))
 
 def main():
   data = pd.read_csv("dataTarget.csv")
