@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+ <head>
+    <title>Keystroke</title>
+    <script type="text/javascript" src="script.js"></script>
+ </head>
+ <body>
+   <label for="users">Escolha seu usuário:</label>
+   <select name="users" id="users">
+   <option selected value="Target_Lilia">Lilia</option>
+   <option value="Target_Wesley">Wesley</option>
+   <option value="Target_Madu">Maria Eduarda</option>
+   <option value="Target_Jose">José</option>
+   <option value="Target_Felipe">Felipe</option>
+   <option value="Target_Roberto">Roberto</option>
+   <option value="Target_Gerson">Gerson</option>
+   </select>
+   <label for="textInput">Insira a senha:</label>
+   <input id="textInput" type="password" onkeydown="press(event)" onkeyup="release(event)">
+   <button onclick="enviar()">Enviar</button>
+   <div id="result"></div>
+ </body>
+</html
