@@ -121,7 +121,7 @@ def crossValidation(data, targets):
 
 def main():
   data = pd.read_csv("dataTarget.csv")
-  targets = ["Target_Lilia", "Target_Wesley"]
+  targets = ["Target_Lilia", "Target_Wesley", "Target_Felipe", "Target_Madu", "Target_Jose", "Target_Roberto", "Target_Gerson"]  
   # holdOut(data,targets)
   crossValidation(data, targets)
 
