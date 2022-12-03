@@ -29,5 +29,4 @@ def learn():
     #req_data = jsonify
     #print(type(data))
 
-    #pegar os modelos treinados para cada classe/usuario, para o usuario entrado verificar se ele é mesmo ele, se der true e se não dar falso, com o predict do classificador ja treinado.
     return str(res)

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SysAlt</title>
+    <link href="./styles/style.css" rel="stylesheet">
+    <link href="./styles/media.css" rel="stylesheet">
+   
+</head>
+<body>
+    <header>
+        <div id="title">
+            <h1>SysAlt/</h1>
+        </div>
+            <!-- <ul>
+               <a href="#"> <li>Início</li></a>
+               <a href="#"> <li>Sobre</li></a>
+               <a href="#"> <li>Contato</li></a>
+               <a href="#" id="criar-conta"><li>Fazer login</li></a>
+
+            </ul> -->
+       
+    </header>
+
+    <main>
+        <aside>
+            <!-- <h2><span>Bem-Vindo</span> </h2>
+            <h2>ao SysAlt</h2> -->
+            <!-- <p>
+                Um sistema de autenticação de usuários que promete revolucionar o mercado de segurança.
+            </p>
+            <a href="" id= "criar-conta"><li>Fazer login</li></a> -->
+            <!-- <form>
+                <input type="email" placeholder="email">
+                <input type="password" placeholder="senha">
+                <input type="submit" value="Entrar" id="entrar">
+                
+            </form> -->
+        </aside>
+
+        <article>
+            <label for="users">Escolha seu usuário:</label>
+            <select name="users" id="users">
+                <option selected value="Target_Lilia">Lilia</option>
+                <option value="Target_Wesley">Wesley</option>
+                <option value="Target_Madu">Maria Eduarda</option>
+                <option value="Target_Jose">José</option>
+                <option value="Target_Felipe">Felipe</option>
+                <option value="Target_Roberto">Roberto</option>
+                <option value="Target_Gerson">Gerson</option>
+            </select>
+            <label for="textInput">Insira a senha:</label>
+            <input id="textInput" type="password" onkeydown="press(event)" onkeyup="release(event)">
+            <button onclick="enviar()">Enviar</button>
+            <div id="result"></div>
+        </article>
+    </main>
+   
+    <footer>
+        <h4>Página criada com 🤍 por Mad U</h4>
+        
+      </footer>  
+      <script type="text/javascript" src="./js/script.js"></script>
+</body>
+</html>
