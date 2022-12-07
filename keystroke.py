@@ -4,6 +4,9 @@ from sklearn.model_selection import train_test_split, KFold, cross_val_score, cr
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 from sklearn import svm
+import scipy.stats as stats
+
+
 
 
 def learn_svm(data, train, test, target):
@@ -107,17 +110,48 @@ def crossValidation(data, targets):
 
   # print(len(acurracies[0]))
   # print(acurracies[0])
+  knnList = []
+  randomForestList =[]
+  svmList = []
   for i in range(len(acurracies)):
     print("Classe:" + targets[i])
     for j in range(len(acurracies[i])):
-      print(classifiers[j])
+      print(str(classifiers[j]))
       mean = 0
       for k in range(len(acurracies[i][j])):
+        #Juntando os valores de cada classe e fold para o mesmo tipo de classificador
+        if(str(classifiers[j]) == "KNeighborsClassifier(metric='euclidean', n_neighbors=7)"):
+          knnList.append(acurracies[i][j][k])
+
+        if(str(classifiers[j]) == "SVC(kernel='linear')"):
+          svmList.append(acurracies[i][j][k])
+
+        if(str(classifiers[j]) == "RandomForestClassifier(random_state=42)"):
+          randomForestList.append(acurracies[i][j][k])
+
         print(str(k + 1) + ": " + str(acurracies[i][j][k]))
         mean += acurracies[i][j][k]
       # print("Média acurácia: {}".format(sum(acurracies[i][j])/len(acurracies[i][j])))
       mean = mean / len(acurracies[i][j])
       print("Média acurácia: " + str(mean))
+
+  classificadores = [knnList, svmList, randomForestList]
+  indices = []
+
+  for i in range(len(classificadores)):
+    for j in range(len(classificadores)):
+      index = str(i) + str(j)
+      indexReverse = index[::-1]
+      if(i == j):
+        continue
+      elif (index not in indices):
+        # print(index)
+        # print(indexReverse)
+        print(str(classifiers[i]) + " com " + str(classifiers[j]))
+        indices.append(index)
+        indices.append(indexReverse)
+        test = stats.wilcoxon(classificadores[i], classificadores[j])
+        print("Pvalue:" + str(test.pvalue))
 
 def main():
   data = pd.read_csv("dataTarget.csv")
